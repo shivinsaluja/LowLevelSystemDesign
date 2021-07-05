@@ -162,7 +162,7 @@ int main()
 
     SnakesandLadders board(num_players);
     
-    cout<<"Enter player name for %d players"<<num_players<<endl;
+    cout<<"Enter player name for " <<num_players<< " players"<<endl;
 
     for(int i = 0 ; i < num_players ; i++)
     {
@@ -204,12 +204,12 @@ int main()
         int dice_number = board.roll_dice();
 
         int new_position = current_position + dice_number;
-        string current_player_name = board.fetch_player_name(current_position);
+        string current_player_name = board.fetch_player_name(current_player);
 
         if(!board.check_valid_position(new_position))
         {
-            cout<<"Player %s could not move because dice gave invalid result"<<current_player_name<<endl;
-            current_position = (current_position + 1)%num_players;
+            cout<<"Player "<<current_player_name<<" could not move because dice gave invalid result"<<endl;
+            current_player = (current_player + 1)%num_players;
             continue;
         }
 
@@ -222,12 +222,13 @@ int main()
         {
             new_position = board.get_ladder_destination(new_position);
         }
-        cout<<"Player %s moved from %d to %d"<<current_player_name<<current_position<<new_position<<endl;
+        cout<<"Player "<<current_player_name<<" moved from "<<current_position<<" to new position "<<new_position<<endl;
         if(new_position == 100)
         {
-            cout<<"Player %s moved from %d to %d and won"<<current_player_name<<current_position<<new_position<<endl;
+            cout<<"Player "<<current_player_name<<" won"<<endl;
             break;
         }
-        current_position = (current_position + 1)%num_players;
+        board.set_player_position(current_player, new_position);
+        current_player = (current_player + 1)%num_players;
     }
 }
